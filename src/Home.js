@@ -4,11 +4,9 @@ import GameContainer from './GameContainer'
 
 function Home() {
   return (
-    <div className="Home">
-      <header className="Home-header">
-        <NavBar />
-        <GameContainer />
-      </header>
+    <div className="home">
+      <NavBar />
+      <GameContainer />
     </div>
   );
 }

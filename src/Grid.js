@@ -1,7 +1,7 @@
 import React from 'react';
-import './GameContainer.css';
+import './Grid.css';
 
-class GameContainer extends React.Component {
+class Grid extends React.Component {
   render() {
     return (
       <div className='game-container'>
@@ -10,4 +10,4 @@ class GameContainer extends React.Component {
     )
   };
 }
-export default GameContainer;
+export default Grid;

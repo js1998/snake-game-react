@@ -1,9 +1,15 @@
 import React from 'react';
-import './Navbar.css';
+import './NavBar.css'
 
 class NavBar extends React.Component {
   render() {
-    return <h1>Hello, NavBar</h1>;
+    return (
+      <div className='navbar'>
+        <div className='navbar-text'>
+          Welcome to Snake!
+        </div>
+      </div>
+    )
   };
 }
 export default NavBar;
