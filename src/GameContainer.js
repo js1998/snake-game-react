@@ -1,5 +1,6 @@
 import React from 'react';
 import './GameContainer.css';
+import Grid from './Grid'
 
 class GameContainer extends React.Component {
   render() {
