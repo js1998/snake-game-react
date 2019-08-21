@@ -1,9 +1,10 @@
 .grid-container {
   display: grid;
-  width: 75%;
+  width: 58vw;
+  margin: auto;
   grid-template-columns: repeat(11, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(15%, auto);
+  grid-gap: 1% 1%;
+  grid-auto-rows: minmax(7.4vh, auto);
 }
 
 .grid-cell {
