@@ -11,6 +11,18 @@
   background-color: grey;
 }
 
+.grid-snake-head-cell {
+  background-color: blue
+}
+
+.grid-snake-tail-cell {
+  background-color: blue
+}
+
+.grid-snake-body-cell {
+  background-color: blue
+}
+
 .grid-food-cell {
   background-color: red;
 }

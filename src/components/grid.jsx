@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styling/grid.css';
 import { connect } from 'react-redux';
-import { newFoodPos } from './../actions';
+import { newFoodPos, moveSnake } from './../actions';
 
 class Grid extends React.Component {
 
@@ -10,6 +10,12 @@ class Grid extends React.Component {
     return gridNumbers.map((idx) => {
         if (this.props.food.position === idx) {
           return <div className="grid-food-cell" key={idx}></div>
+        } else if (this.props.snake.headPosition === idx) {
+          return <div className="grid-snake-head-cell" key={idx}>H</div>
+        } else if (this.props.snake.tailPosition === idx) {
+          return <div className="grid-snake-tail-cell" key={idx}>T</div>
+        } else if (this.props.snake.bodyPositions.includes(idx)) {
+          return <div className="grid-snake-body-cell" key={idx}></div>
         } else {
           return <div className="grid-cell" key={idx}></div>
         }
@@ -17,18 +23,20 @@ class Grid extends React.Component {
     )
   }
 
-  newFoodPos = (event) => {
-    if(event.keyCode === 70) {
+  moveSnake = (event) => {
+    if (37 <= event.keyCode && event.keyCode <= 40 ){
+      this.props.moveSnake(event.keyCode);
+    } else if(event.keyCode === 70) { //TEMP REMOVE THIS LATER
       this.props.newFoodPos();
     }
- }
+  }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.newFoodPos, false)
+    document.addEventListener("keydown", this.moveSnake, false)
   }
 
   componentWillUnmount(){
-    document.removeEventListener("keydown", this.newFoodPos, false);
+    document.removeEventListener("keydown", this.moveSnake, false);
   }
 
   render() {
@@ -41,8 +49,11 @@ class Grid extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { food: state.food }
+  return {
+    food: state.food,
+    snake: state.snake,
+  }
 }
 
 
-export default connect(mapStateToProps,{newFoodPos}) (Grid);
+export default connect(mapStateToProps,{ newFoodPos, moveSnake }) (Grid);
