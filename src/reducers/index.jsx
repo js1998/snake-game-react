@@ -1,15 +1,25 @@
 import { combineReducers } from 'redux';
+import {
+  CREATE_NEW_FOOD
+} from './../actions'
 
 const initialFoodState = {
-  foodPos: {
-    foodPosX: 0,
-    foodPosY: 0,
-  },
+  position: 0,
 }
 
 
-const foodReducer = (state = initialFoodState, actions) => {
-  return state
+const foodReducer = (state = initialFoodState, action) => {
+  switch (action.type) {
+    case CREATE_NEW_FOOD: {
+      const newPos = Math.floor(Math.random() * 121);
+      return {
+        ...state,
+        position: newPos,
+      }
+    }
+    default:
+      return state;
+  }
 }
 
 export default combineReducers({

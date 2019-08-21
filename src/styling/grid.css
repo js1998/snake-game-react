@@ -10,3 +10,7 @@
 .grid-cell {
   background-color: grey;
 }
+
+.grid-food-cell {
+  background-color: red;
+}
