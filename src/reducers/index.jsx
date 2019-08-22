@@ -32,22 +32,36 @@ const snakeReducer = (state = initialSnakePosition, action) => {
   switch (action.type) {
     case MOVE_SNAKE: {
       const tailPosition = newTailPosition(state.bodyPositions);
-      const bodyPositions = moveSnakeBody(state.bodyPositions, state.headPosition, state.tailPosition)
+      const bodyPositions = moveSnakeBody(state.bodyPositions, state.headPosition, state.tailPosition);
       switch (action.move) {
         case 37: { // left
-          return {
-            ...state,
-            headPosition: state.headPosition - 1,
-            bodyPositions,
-            tailPosition,
+          if (state.headPosition % 11 !== 0 ){
+            const headPosition = state.headPosition - 1;
+            return {
+              ...state,
+              headPosition,
+              bodyPositions,
+              tailPosition,
+            }
+          } else {
+            alert("Invalid Move"); // TODO: create better error handling
+            return initialSnakePosition;
           }
+
         }
         case 38: { //up
-          return {
-            ...state,
-            headPosition: state.headPosition - 11,
-            bodyPositions,
-            tailPosition,
+          if (state.headPosition / 11 !== 0) {
+            const headPosition = state.headPosition - 11;
+            return {
+              ...state,
+              headPosition,
+              bodyPositions,
+              tailPosition,
+            }
+          } else {
+            alert('Invalid Move');
+            console.log(initialSnakePosition);
+            return initialSnakePosition;
           }
         }
         case 39: { //right
