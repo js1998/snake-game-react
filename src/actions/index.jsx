@@ -5,15 +5,11 @@ export function newFoodPos() {
   const newPos = Math.floor(Math.random() * 121);
   return {
     type: CREATE_NEW_FOOD,
-    position: newPos,
+    foodPosition: newPos,
   }
 }
 
 export function moveSnake(move) {
-
-  
-
-
   return {
     type: MOVE_SNAKE,
     move,

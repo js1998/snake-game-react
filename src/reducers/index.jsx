@@ -1,87 +1,59 @@
 import { combineReducers } from 'redux';
-import { moveSnakeBody, newTailPosition } from './../helpers/snakeMoveCalculation'
+import {
+  moveSnakeBody,
+  newTailPosition,
+  isValidMove
+} from './../helpers/snakeMoveCalculation'
 import {
   CREATE_NEW_FOOD,
   MOVE_SNAKE,
 } from './../actions'
 
-const initialFoodState = {
-  position: 0,
-}
-
-const initialSnakePosition = {
+const initialGridPositions = {
+  foodPosition: 0,
   headPosition: 118,
   tailPosition: 120,
   bodyPositions: [119],
 }
 
-const foodReducer = (state = initialFoodState, action) => {
+const snakeReducer = (state = initialGridPositions, action) => {
   switch (action.type) {
     case CREATE_NEW_FOOD: {
-      return {
-        ...state,
-        position: action.position,
-      }
+      return { ...state, foodPosition: action.foodPosition };
     }
-    default:
-      return state;
-  }
-}
-
-const snakeReducer = (state = initialSnakePosition, action) => {
-  switch (action.type) {
     case MOVE_SNAKE: {
-      const tailPosition = newTailPosition(state.bodyPositions);
-      const bodyPositions = moveSnakeBody(state.bodyPositions, state.headPosition, state.tailPosition);
-      switch (action.move) {
-        case 37: { // left
-          if (state.headPosition % 11 !== 0 ){
+      if (isValidMove(state.bodyPositions, state.headPosition, state.tailPosition, action.move)) {
+        switch (action.move) {
+          case 37: { // left
             const headPosition = state.headPosition - 1;
-            return {
-              ...state,
-              headPosition,
-              bodyPositions,
-              tailPosition,
+            const tailPosition = newTailPosition(state.bodyPositions);
+            if (headPosition === state.foodPosition) {
+              const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, true);
+              return { ...state, headPosition, bodyPositions }
+            } else {
+              const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, false);
+              return { ...state, headPosition, bodyPositions, tailPosition }
             }
-          } else {
-            alert("Invalid Move"); // TODO: create better error handling
-            return initialSnakePosition;
           }
-
-        }
-        case 38: { //up
-          if (state.headPosition / 11 !== 0) {
+          case 38: { //up
             const headPosition = state.headPosition - 11;
-            return {
-              ...state,
-              headPosition,
-              bodyPositions,
-              tailPosition,
-            }
-          } else {
-            alert('Invalid Move');
-            console.log(initialSnakePosition);
-            return initialSnakePosition;
+            return { ...state, headPosition, bodyPositions, tailPosition }
           }
-        }
-        case 39: { //right
-          return {
-            ...state,
-            headPosition: state.headPosition + 1,
-            bodyPositions,
-            tailPosition,
+          case 39: { //right
+            const headPosition = state.headPosition + 1;
+            return { ...state, headPosition, bodyPositions, tailPosition }
           }
-        }
-        case 40: { //down
-          return {
-            ...state,
-            headPosition: state.headPosition + 11,
-            bodyPositions,
-            tailPosition,
+          case 40: { //down
+            const headPosition = state.headPosition + 11;
+            return { ...state, headPosition, bodyPositions, tailPosition }
           }
+          default:
+            // shouldn't reach here
+            return state;
         }
-        default:
-          return state;
+      } else {
+        alert('Invalid Move');
+        return initialGridPositions;
       }
     }
     default:
