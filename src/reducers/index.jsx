@@ -16,36 +16,60 @@ const initialGridPositions = {
   bodyPositions: [119],
 }
 
-const snakeReducer = (state = initialGridPositions, action) => {
+const gridReducer = (state = initialGridPositions, action) => {
   switch (action.type) {
-    case CREATE_NEW_FOOD: {
+    case CREATE_NEW_FOOD:
       return { ...state, foodPosition: action.foodPosition };
-    }
-    case MOVE_SNAKE: {
+    case MOVE_SNAKE:
       if (isValidMove(state.bodyPositions, state.headPosition, state.tailPosition, action.move)) {
         switch (action.move) {
           case 37: { // left
             const headPosition = state.headPosition - 1;
-            const tailPosition = newTailPosition(state.bodyPositions);
             if (headPosition === state.foodPosition) {
               const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, true);
-              return { ...state, headPosition, bodyPositions }
+              const newPos = Math.floor(Math.random() * 121);
+              return { ...state, headPosition, bodyPositions, foodPosition: newPos }
             } else {
               const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, false);
+              const tailPosition = newTailPosition(state.bodyPositions);
               return { ...state, headPosition, bodyPositions, tailPosition }
             }
           }
           case 38: { //up
             const headPosition = state.headPosition - 11;
-            return { ...state, headPosition, bodyPositions, tailPosition }
+            if (headPosition === state.foodPosition) {
+              const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, true);
+              const newPos = Math.floor(Math.random() * 121);
+              return { ...state, headPosition, bodyPositions, foodPosition: newPos }
+            } else {
+              const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, false);
+              const tailPosition = newTailPosition(state.bodyPositions);
+              return { ...state, headPosition, bodyPositions, tailPosition }
+            }
           }
           case 39: { //right
             const headPosition = state.headPosition + 1;
-            return { ...state, headPosition, bodyPositions, tailPosition }
+            if (headPosition === state.foodPosition) {
+              const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, true);
+              const newPos = Math.floor(Math.random() * 121);
+              return { ...state, headPosition, bodyPositions, foodPosition: newPos }
+            } else {
+              const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, false);
+              const tailPosition = newTailPosition(state.bodyPositions);
+              return { ...state, headPosition, bodyPositions, tailPosition }
+            }
           }
           case 40: { //down
             const headPosition = state.headPosition + 11;
-            return { ...state, headPosition, bodyPositions, tailPosition }
+            if (headPosition === state.foodPosition) {
+              const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, true);
+              const newPos = Math.floor(Math.random() * 121);
+              return { ...state, headPosition, bodyPositions, foodPosition: newPos }
+            } else {
+              const bodyPositions = moveSnakeBody(state.bodyPositions.slice(), state.headPosition, state.tailPosition, false);
+              const tailPosition = newTailPosition(state.bodyPositions);
+              return { ...state, headPosition, bodyPositions, tailPosition }
+            }
           }
           default:
             // shouldn't reach here
@@ -55,13 +79,11 @@ const snakeReducer = (state = initialGridPositions, action) => {
         alert('Invalid Move');
         return initialGridPositions;
       }
-    }
     default:
       return state;
   }
 }
 
 export default combineReducers({
-  food: foodReducer,
-  snake: snakeReducer,
+  grid: gridReducer,
 })

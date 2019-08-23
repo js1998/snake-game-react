@@ -8,13 +8,13 @@ class Grid extends React.Component {
   getGrid = () => {
     let gridNumbers = Array.from({length: 121}, (v,i) => i);
     return gridNumbers.map((idx) => {
-        if (this.props.food.position === idx) {
+        if (this.props.grid.foodPosition === idx) {
           return <div className="grid-food-cell" key={idx}></div>
-        } else if (this.props.snake.headPosition === idx) {
+        } else if (this.props.grid.headPosition === idx) {
           return <div className="grid-snake-head-cell" key={idx}>H</div>
-        } else if (this.props.snake.tailPosition === idx) {
+        } else if (this.props.grid.tailPosition === idx) {
           return <div className="grid-snake-tail-cell" key={idx}>T</div>
-        } else if (this.props.snake.bodyPositions.includes(idx)) {
+        } else if (this.props.grid.bodyPositions.includes(idx)) {
           return <div className="grid-snake-body-cell" key={idx}></div>
         } else {
           return <div className="grid-cell" key={idx}></div>
@@ -50,8 +50,7 @@ class Grid extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    food: state.food,
-    snake: state.snake,
+    grid: state.grid,
   }
 }
 
