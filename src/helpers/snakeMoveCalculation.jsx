@@ -11,7 +11,7 @@ export const newTailPosition = (snakeBody) => {
   return snakeBody[bodyLength -1];
 }
 
-export const isValidMove = (snakeBody, snakeHeadPos, snakeTailPos, move) => {
+export const isValidMove = (snakeBody, snakeHeadPos, snakeTailPos, move, didHitFood) => {
   switch (move) {
     case 37: // left
       return snakeHeadPos % 11 !== 0 &&
@@ -21,7 +21,6 @@ export const isValidMove = (snakeBody, snakeHeadPos, snakeTailPos, move) => {
       return Math.floor(snakeHeadPos / 11) !== 0 &&
         !snakeBody.includes(snakeHeadPos - 11) &&
         snakeTailPos !== snakeHeadPos - 11;
-      return true;
     case 39: //right
       return snakeHeadPos % 11 !== 10 &&
         !snakeBody.includes(snakeHeadPos + 1) &&
